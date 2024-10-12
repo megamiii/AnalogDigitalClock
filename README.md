@@ -6,7 +6,9 @@ A working analog and digital clock created using HTML, CSS, and JavaScript. This
 
 Here’s a preview of how the clock looks:
 
-![Clock Preview](./assets/clock.gif)
+<p align="center">
+  <img src="assets/clock.gif" alt="Analog and Digital Clock" width="750"/>
+</p>
 
 ## Features
 
