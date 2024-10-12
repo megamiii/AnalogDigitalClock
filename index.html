@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Clock</title>
+    <!-- Link to the external CSS stylesheet for styling the clock -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Main container for the clock -->
+    <div class="clock">
+        <!-- Container for the analog clock's numbers and rotating circles (hands) -->
+        <div class="numbers">
+            <!-- Three rotating circles representing the hour, minute, and second hands -->
+            <div class="circle" id="sec" style="--clr:#04fc43;"></div>  <!-- Second hand in green -->
+            <div class="circle" id="min" style="--clr:#fee800;"></div>  <!-- Minute hand in yellow -->
+            <div class="circle" id="hrs" style="--clr:#ff2972;"></div>  <!-- Hour hand in pink -->
+
+            <!-- Numbers of the analog clock placed using CSS variables for positioning -->
+            <span style="--i:0;"><b>12</b></span>
+            <span style="--i:1;"><b>1</b></span>
+            <span style="--i:2;"><b>2</b></span>
+            <span style="--i:3;"><b>3</b></span>
+            <span style="--i:4;"><b>4</b></span>
+            <span style="--i:5;"><b>5</b></span>
+            <span style="--i:6;"><b>6</b></span>
+            <span style="--i:7;"><b>7</b></span>
+            <span style="--i:8;"><b>8</b></span>
+            <span style="--i:9;"><b>9</b></span>
+            <span style="--i:10;"><b>10</b></span>
+            <span style="--i:11;"><b>11</b></span>
+        </div>
+
+        <!-- Digital clock display -->
+        <div id="time">
+            <!-- Display for hours, minutes, seconds, and AM/PM marker with different colors -->
+            <div id="hour" style="--clr:#ff2972;">00</div>  <!-- Hours in pink -->
+            <div id="minute" style="--clr:#fee800;">00</div>  <!-- Minutes in yellow -->
+            <div id="second" style="--clr:#04fc43;">00</div>  <!-- Seconds in green -->
+            <div id="ampm" style="--clr:#fff;">AM</div>  <!-- AM/PM marker in white -->
+        </div>
+    </div>
+
+    <!-- JavaScript for the clock functionality (both analog and digital) -->
+    <script>
+        // Selecting the circle elements for the hour, minute, and second hands of the analog clock
+        let hr = document.querySelector('#hrs');
+        let mn = document.querySelector('#min');
+        let sc = document.querySelector('#sec');
+
+        // Set up an interval to update the clock every second
+        setInterval(() => {
+            // Get the current time
+            let day = new Date();
+            let hh = day.getHours() * 30;  // Convert hours to degrees (360/12 = 30 degrees per hour)
+            let mm = day.getMinutes() * 6;  // Convert minutes to degrees (360/60 = 6 degrees per minute)
+            let ss = day.getSeconds() * 6;  // Convert seconds to degrees (360/60 = 6 degrees per second)
+
+            // Rotate the clock hands using the calculated degree values
+            hr.style.transform = `rotateZ(${hh + (mm / 12)}deg)`;  // Rotate the hour hand
+            mn.style.transform = `rotateZ(${mm}deg)`;  // Rotate the minute hand
+            sc.style.transform = `rotateZ(${ss}deg)`;  // Rotate the second hand
+
+            // Digital clock code to update the time displayed in numbers
+            let hour = document.getElementById('hour');
+            let minute = document.getElementById('minute');
+            let second = document.getElementById('second');
+            let ampm = document.getElementById('ampm');
+
+            // Get the current hours, minutes, and seconds
+            let h = new Date().getHours();
+            let m = new Date().getMinutes();
+            let s = new Date().getSeconds();
+
+            // Determine whether it's AM or PM
+            let am = h >= 12 ? 'PM' : 'AM';
+
+            // Convert 24-hour format to 12-hour format
+            if (h > 12) {
+                h -= 12;
+            }
+
+            // Add leading zeros for single-digit hours, minutes, and seconds
+            h = (h < 10) ? "0" + h : h;
+            m = (m < 10) ? "0" + m : m;
+            s = (s < 10) ? "0" + s : s;
+
+            // Update the digital clock's display
+            hour.innerHTML = h;
+            minute.innerHTML = m;
+            second.innerHTML = s;
+            ampm.innerHTML = am;
+        }, 1000);  // Update the clock every second (1000 milliseconds)
+    </script>
+</body>
+</html>
